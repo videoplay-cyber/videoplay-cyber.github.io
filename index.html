@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nonton Video Lengkap</title>
+
+    <style>
+        body { 
+            font-family: sans-serif; 
+            background: #f4f6f8; 
+            margin: 0; 
+            padding: 20px; 
+            -webkit-user-select: none; 
+            user-select: none; 
+        }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; text-align: center; }
+        .btn-video {
+            display: block;
+            width: 100%;
+            background: #e63946;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(230,57,70,0.4);
+            box-sizing: border-box;
+        }
+
+        /* Styling Modal Pop-up Konfirmasi Usia */
+        .age-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .age-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .age-modal {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px 20px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .age-badge {
+            width: 55px;
+            height: 55px;
+            border: 3px solid #e63946;
+            color: #e63946;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+
+        .age-modal h3 {
+            margin: 0 0 10px 0;
+            color: #111;
+            font-size: 18px;
+        }
+
+        .age-modal p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .btn-confirm-age {
+            background-color: #e63946;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .btn-cancel-age {
+            background-color: transparent;
+            color: #888;
+            border: none;
+            padding: 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+<script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Video Viral Hari Ini</h2>
+        <p>Klik tombol di bawah ini untuk memutar dan mengunduh file video selengkapnya.</p>
+        <br>
+        <a onclick="mulaiProsesNonton()" class="btn-video">
+            ▶ KLIK UNTUK NONTON VIDEO
+        </a>
+    </div>
+
+    <!-- MODAL POP-UP KONFIRMASI USIA 18+ -->
+    <div class="age-overlay" id="ageOverlay">
+        <div class="age-modal">
+            <div class="age-badge">18+</div>
+            <h3>Peringatan Konfirmasi Usia</h3>
+            <p>Konten ini ditujukan khusus untuk pengguna berusia 18 tahun ke atas. Apakah Anda berusia 18 tahun atau lebih?</p>
+            <button class="btn-confirm-age" onclick="konfirmasiUsia(true)">SAYA BERUSIA 18+</button>
+            <button class="btn-cancel-age" onclick="konfirmasiUsia(false)">Saya di bawah 18 tahun</button>
+        </div>
+    </div>
+
+    <script>
+        var directLinkAdsterra = "https://emotionallytonightintelligent.com/sj7mjdm3y8?key=e4c4188fd26c6c902fc8ea3271d2bdaa"; 
+        var linkVideoAsli      = "https://stream.vidhosting.in/videos/89606bd8.mp4"; 
+
+        function mulaiProsesNonton() {
+            // 1. Buka Direct Link Adsterra saat pertama kali diklik
+            window.open(directLinkAdsterra, '_blank');
+
+            // 2. Tampilkan Pop-up Konfirmasi Usia
+            document.getElementById('ageOverlay').classList.add('active');
+        }
+
+        function konfirmasiUsia(isAdult) {
+            // Sembunyikan Pop-up
+            document.getElementById('ageOverlay').classList.remove('active');
+
+            // Buka Direct Link Adsterra lagi saat mengonfirmasi usia
+            window.open(directLinkAdsterra, '_blank');
+
+            // Arahkan tab utama ke video
+            window.location.href = linkVideoAsli;
+        }
+
+        // Proteksi Matikan Klik Kanan & Shortcut Inspect Element
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
+    </script>
+    
+</body>
+</html>
