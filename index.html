@@ -3,162 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nonton Video Lengkap</title>
+    <title>DoodStream Pro Style - Streaming & Download</title>
+
+    <!-- OPTIMASI PRELOAD POSTER -->
+    <link rel="preload" as="image" href="https://i.ibb.co/wNbGw8yF/IMG-20260928-162234.jpg" fetchpriority="high">
+
+    <!-- SCRIPT POPUNDER ADSTERRA PERTAMA -->
+    <script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
 
     <style>
-        body { 
-            font-family: sans-serif; 
-            background: #f4f6f8; 
-            margin: 0; 
-            padding: 20px; 
-            -webkit-user-select: none; 
-            user-select: none; 
-        }
-        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; text-align: center; }
-        .btn-video {
-            display: block;
-            width: 100%;
-            background: #e63946;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(230,57,70,0.4);
+        * {
             box-sizing: border-box;
         }
 
-        /* Styling Modal Pop-up Konfirmasi Usia */
-        .age-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        body {
+            background-color: #121212;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+        .video-card {
+            background-color: #222;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            border: 1px solid #333;
+        }
+
+        /* Pembungkus Video & Poster */
+        .video-player-wrapper {
+            background-color: #000;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .video-player-wrapper video {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
+            object-fit: contain;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        /* Efek Video Mengeblur Saat Paused di Belakang Pop-up Usia */
+        .video-player-wrapper.blur-video video {
+            filter: blur(10px);
+            -webkit-filter: blur(10px);
+        }
+
+        /* Lapisan Poster & Tombol Play */
+        .poster-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
-        .age-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .poster-overlay img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        .age-modal {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 25px 20px;
-            max-width: 380px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        /* Efek Gelap Transparan di Atas Poster */
+        .poster-overlay::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 11;
         }
 
-        .age-badge {
-            width: 55px;
-            height: 55px;
-            border: 3px solid #e63946;
-            color: #e63946;
+        /* Tombol Play Besar Khas Doodstream */
+        .play-button {
+            position: relative;
+            z-index: 12;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(0, 0, 0, 0.65);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0 auto 15px auto;
+            border: 3px solid #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s ease;
         }
 
-        .age-modal h3 {
-            margin: 0 0 10px 0;
-            color: #111;
-            font-size: 18px;
+        .play-button:hover {
+            transform: scale(1.1);
         }
 
-        .age-modal p {
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 16px solid transparent;
+            border-left: 26px solid #fff;
+            border-bottom: 16px solid transparent;
+            margin-left: 5px;
+        }
+
+        /* Animasi Tombol Play */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        /* Sembunyikan Poster Saat Dimainkan */
+        .video-player-wrapper.playing .poster-overlay {
+            display: none;
+        }
+
+        /* LAPISAN TRANSPARAN TRIGGER POPUNDER */
+        .ad-click-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 20;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0);
+        }
+
+        /* MODAL KONFIRMASI USIA */
+        .age-modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 30;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .age-modal-card {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+        }
+
+        .age-badge {
+            background: #e50914;
+            color: #fff;
             font-size: 14px;
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            font-weight: bold;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px auto;
         }
 
-        .btn-confirm-age {
-            background-color: #e63946;
-            color: #ffffff;
+        .age-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .age-desc {
+            font-size: 11px;
+            color: #ccc;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .age-btn {
+            width: 100%;
+            padding: 9px;
+            background: #28a745;
+            color: #fff;
             border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 15px;
+            border-radius: 4px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            margin-bottom: 8px;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .btn-cancel-age {
-            background-color: transparent;
+        .age-btn:hover {
+            background: #218838;
+        }
+        
+        .age-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Bagian Informasi Video */
+        .video-info {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .video-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .video-channel {
+            color: #aaa;
+            font-size: 13px;
+            display: block;
+        }
+
+        .video-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
             color: #888;
-            border: none;
-            padding: 8px;
             font-size: 12px;
-            cursor: pointer;
+        }
+
+        .stat-item svg {
+            width: 14px;
+            height: 14px;
+            fill: #888;
+            margin-right: 5px;
+        }
+        
+        /* Tombol Download */
+        .download-section {
+            padding: 15px;
+        }
+
+        .btn-download {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0ad4e;
+            color: #000;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-download:hover { background-color: #ec971f; }
+        .btn-download:active { transform: scale(0.98); }
+
+        @media (max-width: 480px) {
+            .main-container { margin-top: 5px; padding: 6px; }
+            .video-title { font-size: 15px; }
+            .age-modal-card { padding: 12px; }
+            .age-title { font-size: 13px; }
+            .age-desc { font-size: 10px; margin-bottom: 8px; }
+            .age-btn { padding: 8px; font-size: 12px; }
         }
     </style>
-<script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Video Viral Hari Ini</h2>
-        <p>Klik tombol di bawah ini untuk memutar dan mengunduh file video selengkapnya.</p>
-        <br>
-        <a onclick="mulaiProsesNonton()" class="btn-video">
-            ▶ KLIK UNTUK NONTON VIDEO
-        </a>
-    </div>
+    <div class="main-container">
+        <div class="video-card">
+            
+            <!-- AREA VIDEO PLAYER -->
+            <div class="video-player-wrapper" id="videoWrapper">
+                
+                <!-- Lapisan Transparan Trigger Popunder #1 -->
+                <div class="ad-click-layer" id="adClickLayer"></div>
 
-    <!-- MODAL POP-UP KONFIRMASI USIA 18+ -->
-    <div class="age-overlay" id="ageOverlay">
-        <div class="age-modal">
-            <div class="age-badge">18+</div>
-            <h3>Peringatan Konfirmasi Usia</h3>
-            <p>Konten ini ditujukan khusus untuk pengguna berusia 18 tahun ke atas. Apakah Anda berusia 18 tahun atau lebih?</p>
-            <button class="btn-confirm-age" onclick="konfirmasiUsia(true)">SAYA BERUSIA 18+</button>
-            <button class="btn-cancel-age" onclick="konfirmasiUsia(false)">Saya di bawah 18 tahun</button>
+                <!-- MODAL KONFIRMASI USIA -->
+                <div class="age-modal-overlay" id="ageModal">
+                    <div class="age-modal-card">
+                        <div class="age-badge">18+</div>
+                        <div class="age-title">Peringatan Usia</div>
+                        <div class="age-desc">Konten ini khusus untuk 18 tahun ke atas. Konfirmasi usia untuk menonton.</div>
+                        <button class="age-btn" id="confirmAgeBtn">SAYA BERUSIA 18 TAHUN +</button>
+                    </div>
+                </div>
+
+                <!-- Poster Sampul -->
+                <div class="poster-overlay" id="posterOverlay">
+                    <img id="posterImg" src="" alt="Poster Video" fetchpriority="high" loading="eager">
+                    <div class="play-button">
+                        <div class="play-icon"></div>
+                    </div>
+                </div>
+
+                <!-- Pemutar Video HTML5 (preload = none) -->
+                <video id="myVideo" controls preload="none">
+                    <source id="videoSource" src="" type="video/mp4">
+                    Browser Anda tidak mendukung pemutar video HTML5.
+                </video>
+            </div>
+
+            <!-- METADATA & DESKRIPSI -->
+            <div class="video-info">
+                <span class="video-title">Hadiah dari Ibu tiri. Untukmu yang kini telah dewasa</span>
+                <span class="video-channel">@VividCinema</span>
+                
+                <div class="video-stats">
+                    <div class="stat-item">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                        2:22:48
+                    </div>
+                    <div class="stat-item">
+                        <svg viewBox="0 0 24 24"><path d="M18 2h-8L4.02 8 4 20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-6 6h-2V4h2v4zm3 0h-2V4h2v4zm3 0h-2V4h2v4z"/></svg>
+                        1,47 GB
+                    </div>
+                    <div class="stat-item">
+                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                        September 24, 2026
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOMBOL DOWNLOAD -->
+            <div class="download-section">
+                <a id="downloadBtn" href="#" target="_blank" class="btn-download">
+                    Download Now &nbsp; ➔
+                </a>
+            </div>
+
         </div>
     </div>
 
     <script>
-        var directLinkAdsterra = "https://emotionallytonightintelligent.com/sj7mjdm3y8?key=e4c4188fd26c6c902fc8ea3271d2bdaa"; 
-        var linkVideoAsli      = "https://stream.vidhosting.in/videos/89606bd8.mp4"; 
+        const CONFIG = {
+            posterUrl: "https://i.ibb.co/wNbGw8yF/IMG-20260928-162234.jpg",
+            videoUrl: "https://stream.vidhosting.in/videos/29164b1a.mp4",
+            // Direct Link Iklan Kedua:
+            directLinkPopunder2: "https://emotionallytonightintelligent.com/bwuq2bmay8?key=2a15084bf7ff93836ca192b167c929d0"
+        };
 
-        function mulaiProsesNonton() {
-            // 1. Buka Direct Link Adsterra saat pertama kali diklik
-            window.open(directLinkAdsterra, '_blank');
+        // Elemen DOM
+        const posterImg = document.getElementById('posterImg');
+        const myVideo = document.getElementById('myVideo');
+        const videoSource = document.getElementById('videoSource');
+        const videoWrapper = document.getElementById('videoWrapper');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const adClickLayer = document.getElementById('adClickLayer');
+        const ageModal = document.getElementById('ageModal');
+        const confirmAgeBtn = document.getElementById('confirmAgeBtn');
 
-            // 2. Tampilkan Pop-up Konfirmasi Usia
-            document.getElementById('ageOverlay').classList.add('active');
-        }
+        // Pemuatan data
+        posterImg.src = CONFIG.posterUrl;
+        videoSource.src = CONFIG.videoUrl;
+        downloadBtn.href = CONFIG.videoUrl;
 
-        function konfirmasiUsia(isAdult) {
-            // Sembunyikan Pop-up
-            document.getElementById('ageOverlay').classList.remove('active');
+        // 1. Klik pertama memicu Popunder Adsterra (diberi jeda 100ms agar skrip Adsterra sempat menangkap event klik)
+        adClickLayer.addEventListener('click', function() {
+            setTimeout(function() {
+                videoWrapper.classList.add('playing');
+                adClickLayer.style.display = 'none';
 
-            // Buka Direct Link Adsterra lagi saat mengonfirmasi usia
-            window.open(directLinkAdsterra, '_blank');
+                videoWrapper.classList.add('blur-video');
+                ageModal.style.display = 'flex';
+            }, 100);
+        });
 
-            // Arahkan tab utama ke video
-            window.location.href = linkVideoAsli;
-        }
+        // 2. Klik kedua (konfirmasi usia) memicu Direct Link Iklan #2 & memutar video
+        confirmAgeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            if (CONFIG.directLinkPopunder2 && CONFIG.directLinkPopunder2 !== "https://contoh-link-iklan-kedua.com") {
+                window.open(CONFIG.directLinkPopunder2, '_blank');
+            }
+
+            ageModal.style.display = 'none';
+            videoWrapper.classList.remove('blur-video');
+
+            myVideo.load();
+            myVideo.play();
+        });
 
         // Proteksi Matikan Klik Kanan & Shortcut Inspect Element
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
@@ -168,6 +417,6 @@
             }
         };
     </script>
-    
+
 </body>
 </html>
