@@ -3,420 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoodStream Pro Style - Streaming & Download</title>
-
-    <!-- OPTIMASI PRELOAD POSTER -->
-    <link rel="preload" as="image" href="https://i.ibb.co/wNbGw8yF/IMG-20260928-162234.jpg" fetchpriority="high">
-
-    <!-- SCRIPT POPUNDER ADSTERRA PERTAMA -->
-    <script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
-
+    <title>VIDHUB - Premium Video Streaming</title>
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: #1e2638;
+            --primary-red: #e50914;
+            --text-color: #ffffff;
+            --text-muted: #9aa4bf;
+            --gold-color: #ffb400;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #121212;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* Container Utama */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 12px;
+        }
+
+        /* Header Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-18 {
+            background-color: var(--primary-red);
             color: #fff;
-            -webkit-user-select: none;
-            user-select: none;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
-        .main-container {
-            width: 100%;
-            max-width: 500px;
-            margin-top: 15px;
-            padding: 10px;
+        .brand-text {
+            color: #ffffff;
         }
 
-        .video-card {
-            background-color: #222;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            border: 1px solid #333;
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Pembungkus Video & Poster */
-        .video-player-wrapper {
-            background-color: #000;
-            aspect-ratio: 16 / 9;
-            width: 100%;
-            position: relative;
+        .btn-icon-setting {
+            background-color: #1e2638;
+            color: #9aa4bf;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            overflow: hidden;
         }
 
-        .video-player-wrapper video {
+        .btn-vip-access {
+            background: linear-gradient(135deg, #ff0015 0%, #99000d 100%);
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+            cursor: pointer;
+        }
+
+        /* Teks Status Live Stream */
+        .stream-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .live-tag {
+            color: var(--primary-red);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-red);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .stream-title {
+            color: #d1d5db;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Frame Pemutar Video Utama */
+        .video-card-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+
+        video {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            display: block;
-            transition: filter 0.3s ease;
         }
 
-        /* Efek Video Mengeblur Saat Paused di Belakang Pop-up Usia */
-        .video-player-wrapper.blur-video video {
-            filter: blur(10px);
-            -webkit-filter: blur(10px);
-        }
-
-        /* Lapisan Poster & Tombol Play */
-        .poster-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.3s ease;
-        }
-
-        .poster-overlay img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Overlay Play Button Awal */
+        .video-play-overlay {
             position: absolute;
             top: 0;
             left: 0;
-        }
-
-        /* Efek Gelap Transparan di Atas Poster */
-        .poster-overlay::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.4);
-            z-index: 11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
         }
 
-        /* Tombol Play Besar Khas Doodstream */
-        .play-button {
-            position: relative;
-            z-index: 12;
-            width: 70px;
-            height: 70px;
-            background-color: rgba(0, 0, 0, 0.65);
+        .play-button-big {
+            width: 64px;
+            height: 64px;
+            background-color: var(--primary-red);
             border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            border: 3px solid #fff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            animation: pulse 2s infinite;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 24px;
+            padding-left: 4px;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
             transition: transform 0.2s ease;
         }
 
-        .play-button:hover {
+        .video-play-overlay:hover .play-button-big {
             transform: scale(1.1);
         }
 
-        .play-icon {
-            width: 0;
-            height: 0;
-            border-top: 16px solid transparent;
-            border-left: 26px solid #fff;
-            border-bottom: 16px solid transparent;
-            margin-left: 5px;
-        }
-
-        /* Animasi Tombol Play */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-        }
-
-        /* Sembunyikan Poster Saat Dimainkan */
-        .video-player-wrapper.playing .poster-overlay {
-            display: none;
-        }
-
-        /* LAPISAN TRANSPARAN TRIGGER POPUNDER */
-        .ad-click-layer {
+        /* Modal Konfirmasi Usia DI DALAM FRAME VIDEO */
+        .frame-age-modal {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 20;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0);
-        }
-
-        /* MODAL KONFIRMASI USIA */
-        .age-modal-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 30;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 14, 20, 0.92);
+            backdrop-filter: blur(4px);
             display: none;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 10px;
-        }
-
-        .age-modal-card {
-            background: rgba(20, 20, 20, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 15px;
-            width: 90%;
-            max-width: 320px;
+            justify-content: center;
+            padding: 16px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+            z-index: 20;
         }
 
-        .age-badge {
-            background: #e50914;
-            color: #fff;
+        .frame-modal-icon {
+            font-size: 28px;
+            color: var(--primary-red);
+            margin-bottom: 6px;
+        }
+
+        .frame-modal-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .frame-modal-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.3;
+            margin-bottom: 14px;
+            max-width: 90%;
+        }
+
+        .frame-modal-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            max-width: 240px;
+        }
+
+        .btn-frame {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-frame-confirm {
+            background-color: var(--primary-red);
+            color: #ffffff;
+        }
+
+        .btn-frame-cancel {
+            background-color: #1e2638;
+            color: var(--text-muted);
+        }
+
+        /* Seksi Deskripsi Video */
+        .video-info-section {
+            margin-top: 18px;
+            margin-bottom: 16px;
+        }
+
+        .info-title {
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-title i {
+            color: #ff5500;
+        }
+
+        /* Tampilan Info Metadata (Durasi, Ukuran, Tanggal) */
+        .video-meta-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-item i {
             font-size: 14px;
-            font-weight: bold;
-            width: 36px;
-            height: 36px;
+        }
+
+        /* Tombol Download Utama (Menarik & Interaktif) */
+        .btn-download-wrapper {
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .btn-download-large {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, #e50914 0%, #b3000a 50%, #800007 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.5);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Efek Kilau / Shimmer Animated Glow */
+        .btn-download-large::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                rgba(255, 255, 255, 0) 20%,
+                rgba(255, 255, 255, 0.35) 50%,
+                rgba(255, 255, 255, 0) 80%
+            );
+            transform: rotate(25deg);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                left: 140%;
+            }
+        }
+
+        .btn-download-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(229, 9, 20, 0.7);
+        }
+
+        .btn-download-large:active {
+            transform: translateY(1px) scale(0.99);
+        }
+
+        /* Ikon Download Animasi Bounce */
+        .download-icon-box {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin: 0 auto 8px auto;
+            justify-content: center;
+            font-size: 18px;
+            backdrop-filter: blur(4px);
         }
 
-        .age-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 4px;
-            color: #fff;
+        .download-icon-box i {
+            animation: bounceDown 1.8s infinite ease-in-out;
         }
 
-        .age-desc {
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(-2px); }
+            50% { transform: translateY(3px); }
+        }
+
+        .download-text-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            line-height: 1.15;
+        }
+
+        .download-main-text {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .download-sub-text {
             font-size: 11px;
-            color: #ccc;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .age-btn {
-            width: 100%;
-            padding: 9px;
-            background: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .age-btn:hover {
-            background: #218838;
-        }
-        
-        .age-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* Bagian Informasi Video */
-        .video-info {
-            padding: 15px;
-            border-bottom: 1px solid #333;
-        }
-
-        .video-title {
-            color: #fff;
-            font-size: 16px;
             font-weight: 600;
-            display: block;
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
-
-        .video-channel {
-            color: #aaa;
-            font-size: 13px;
-            display: block;
-        }
-
-        .video-stats {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            color: #888;
-            font-size: 12px;
-        }
-
-        .stat-item svg {
-            width: 14px;
-            height: 14px;
-            fill: #888;
-            margin-right: 5px;
-        }
-        
-        /* Tombol Download */
-        .download-section {
-            padding: 15px;
-        }
-
-        .btn-download {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0ad4e;
-            color: #000;
-            text-decoration: none;
-            padding: 14px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-
-        .btn-download:hover { background-color: #ec971f; }
-        .btn-download:active { transform: scale(0.98); }
-
-        @media (max-width: 480px) {
-            .main-container { margin-top: 5px; padding: 6px; }
-            .video-title { font-size: 15px; }
-            .age-modal-card { padding: 12px; }
-            .age-title { font-size: 13px; }
-            .age-desc { font-size: 10px; margin-bottom: 8px; }
-            .age-btn { padding: 8px; font-size: 12px; }
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 2px;
         }
     </style>
+    <script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="video-card">
-            
-            <!-- AREA VIDEO PLAYER -->
-            <div class="video-player-wrapper" id="videoWrapper">
-                
-                <!-- Lapisan Transparan Trigger Popunder #1 -->
-                <div class="ad-click-layer" id="adClickLayer"></div>
+    <!-- Container Utama App -->
+    <div class="app-container">
 
-                <!-- MODAL KONFIRMASI USIA -->
-                <div class="age-modal-overlay" id="ageModal">
-                    <div class="age-modal-card">
-                        <div class="age-badge">18+</div>
-                        <div class="age-title">Peringatan Usia</div>
-                        <div class="age-desc">Konten ini khusus untuk 18 tahun ke atas. Konfirmasi usia untuk menonton.</div>
-                        <button class="age-btn" id="confirmAgeBtn">SAYA BERUSIA 18 TAHUN +</button>
-                    </div>
-                </div>
-
-                <!-- Poster Sampul -->
-                <div class="poster-overlay" id="posterOverlay">
-                    <img id="posterImg" src="" alt="Poster Video" fetchpriority="high" loading="eager">
-                    <div class="play-button">
-                        <div class="play-icon"></div>
-                    </div>
-                </div>
-
-                <!-- Pemutar Video HTML5 (preload = none) -->
-                <video id="myVideo" controls preload="none">
-                    <source id="videoSource" src="" type="video/mp4">
-                    Browser Anda tidak mendukung pemutar video HTML5.
-                </video>
+        <!-- 1. Header Navbar -->
+        <header class="navbar">
+            <div class="brand-logo">
+                <span class="badge-18">18+</span>
+                <span class="brand-text">VIDHUB</span>
             </div>
-
-            <!-- METADATA & DESKRIPSI -->
-            <div class="video-info">
-                <span class="video-title">Hadiah dari Ibu tiri. Untukmu yang kini telah dewasa</span>
-                <span class="video-channel">@VividCinema</span>
-                
-                <div class="video-stats">
-                    <div class="stat-item">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        2:22:48
-                    </div>
-                    <div class="stat-item">
-                        <svg viewBox="0 0 24 24"><path d="M18 2h-8L4.02 8 4 20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-6 6h-2V4h2v4zm3 0h-2V4h2v4zm3 0h-2V4h2v4z"/></svg>
-                        1,47 GB
-                    </div>
-                    <div class="stat-item">
-                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
-                        September 24, 2026
-                    </div>
-                </div>
+            <div class="header-actions">
+                <button class="btn-icon-setting" aria-label="Settings" onclick="openDirectLink()">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <button class="btn-vip-access" onclick="openDirectLink()">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>VIP Access</span>
+                </button>
             </div>
+        </header>
 
-            <!-- TOMBOL DOWNLOAD -->
-            <div class="download-section">
-                <a id="downloadBtn" href="#" target="_blank" class="btn-download">
-                    Download Now &nbsp; ➔
-                </a>
-            </div>
-
+        <!-- 2. Teks Status Streaming -->
+        <div class="stream-status-bar">
+            <span class="live-tag">
+                <span class="live-indicator"></span> LIVE STREAM
+            </span>
+            <span style="color: var(--card-border);">|</span>
+            <span class="stream-title">🔥 Video Streaming Premium (Full Uncut HD)</span>
         </div>
+
+        <!-- 3. Frame Pemutar Video Utama -->
+        <div class="video-card-frame">
+            <video id="myVideo" poster="https://i.ibb.co.com/pvW16S0M/image.webp" playsinline preload="metadata">
+                <!-- LINK DIRECT FILE VIDEO MP4 CATBOX -->
+                <source src="https://files.catbox.moe/qy3h7u.mp4" type="video/mp4">
+            </video>
+
+            <!-- Overlay Play Button Awal -->
+            <div class="video-play-overlay" id="playOverlay" onclick="handlePlayClick()">
+                <div class="play-button-big">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+            </div>
+
+            <!-- Modal Konfirmasi Usia DI DALAM FRAME -->
+            <div class="frame-age-modal" id="frameAgeModal">
+                <div class="frame-modal-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h2 class="frame-modal-title">Konfirmasi Usia</h2>
+                <p class="frame-modal-text">Konten ini khusus untuk usia 18+. Verifikasi usia Anda untuk melanjutkan.</p>
+                <div class="frame-modal-actions">
+                    <button class="btn-frame btn-frame-cancel" onclick="cancelAgeCheck(event)">Batal</button>
+                    <button class="btn-frame btn-frame-confirm" onclick="confirmAgeAndPlay(event)">Saya 18+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Seksi Deskripsi & Metadata Video -->
+        <section class="video-info-section">
+            <h1 class="info-title">
+                <i class="fa-solid fa-fire"></i>
+                <span>Tante Jadi Pengen Karena Lihat Punyaku (Full HD)</span>
+            </h1>
+            
+            <!-- Tampilan Info Sesuai Gambar -->
+            <div class="video-meta-bar">
+                <div class="meta-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>27:48</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fa-solid fa-sd-card"></i>
+                    <span>118 MB</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>September 24, 2026</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Tombol DOWNLOAD NOW Utama (Model Menarik & Animatif) -->
+        <div class="btn-download-wrapper">
+            <button class="btn-download-large" onclick="handlePlayClick()">
+                <div class="download-icon-box">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+                <div class="download-text-content">
+                    <span class="download-main-text">DOWNLOAD NOW</span>
+                    <span class="download-sub-text">⚡ Kecepatan Tinggi • Full HD 1080p</span>
+                </div>
+            </button>
+        </div>
+
     </div>
 
+    <!-- Script Kontrol Interaktif & Direct Link -->
     <script>
-        const CONFIG = {
-            posterUrl: "https://i.ibb.co/wNbGw8yF/IMG-20260928-162234.jpg",
-            videoUrl: "https://stream.vidhosting.in/videos/29164b1a.mp4",
-            // Direct Link Iklan Kedua:
-            directLinkPopunder2: "https://emotionallytonightintelligent.com/bwuq2bmay8?key=2a15084bf7ff93836ca192b167c929d0"
-        };
+        const DIRECT_LINK = "https://emotionallytonightintelligent.com/bwuq2bmay8?key=64b01feeb25c6433602effa9db70338d";
 
-        // Elemen DOM
-        const posterImg = document.getElementById('posterImg');
-        const myVideo = document.getElementById('myVideo');
-        const videoSource = document.getElementById('videoSource');
-        const videoWrapper = document.getElementById('videoWrapper');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const adClickLayer = document.getElementById('adClickLayer');
-        const ageModal = document.getElementById('ageModal');
-        const confirmAgeBtn = document.getElementById('confirmAgeBtn');
+        const video = document.getElementById('myVideo');
+        const playOverlay = document.getElementById('playOverlay');
+        const frameAgeModal = document.getElementById('frameAgeModal');
+        let isAgeVerified = false;
 
-        // Pemuatan data
-        posterImg.src = CONFIG.posterUrl;
-        videoSource.src = CONFIG.videoUrl;
-        downloadBtn.href = CONFIG.videoUrl;
-
-        // 1. Klik pertama memicu Popunder Adsterra (diberi jeda 100ms agar skrip Adsterra sempat menangkap event klik)
-        adClickLayer.addEventListener('click', function() {
-            setTimeout(function() {
-                videoWrapper.classList.add('playing');
-                adClickLayer.style.display = 'none';
-
-                videoWrapper.classList.add('blur-video');
-                ageModal.style.display = 'flex';
-            }, 100);
-        });
-
-        // 2. Klik kedua (konfirmasi usia) memicu Direct Link Iklan #2 & memutar video
-        confirmAgeBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-
-            if (CONFIG.directLinkPopunder2 && CONFIG.directLinkPopunder2 !== "https://contoh-link-iklan-kedua.com") {
-                window.open(CONFIG.directLinkPopunder2, '_blank');
+        function handlePlayClick() {
+            if (!isAgeVerified) {
+                frameAgeModal.style.display = 'flex';
+                playOverlay.style.display = 'none';
+            } else {
+                startVideoAndRedirect();
             }
+        }
 
-            ageModal.style.display = 'none';
-            videoWrapper.classList.remove('blur-video');
+        function cancelAgeCheck(e) {
+            if (e) e.stopPropagation();
+            frameAgeModal.style.display = 'none';
+            playOverlay.style.display = 'flex';
+        }
 
-            myVideo.load();
-            myVideo.play();
-        });
+        function confirmAgeAndPlay(e) {
+            isAgeVerified = true;
+            frameAgeModal.style.display = 'none';
+            playOverlay.style.display = 'none';
 
-        // Proteksi Matikan Klik Kanan & Shortcut Inspect Element
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-                return false;
+            startVideoAndRedirect();
+        }
+
+        function startVideoAndRedirect() {
+            video.controls = true;
+            video.load();
+            
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    setTimeout(() => {
+                        openDirectLink();
+                    }, 300);
+                }).catch(error => {
+                    console.log("Autoplay dibatasi browser, membuka direct link:", error);
+                    openDirectLink();
+                });
+            } else {
+                openDirectLink();
             }
-        };
+        }
+
+        function openDirectLink() {
+            window.open(DIRECT_LINK, '_blank');
+        }
     </script>
-
 </body>
 </html>
