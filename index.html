@@ -1,564 +1,115 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDHUB - Premium Video Streaming</title>
-    <!-- FontAwesome untuk ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-color: #0b0e14;
-            --card-bg: #131822;
-            --card-border: #1e2638;
-            --primary-red: #e50914;
-            --text-color: #ffffff;
-            --text-muted: #9aa4bf;
-            --gold-color: #ffb400;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 40px;
-        }
-
-        /* Container Utama */
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            padding: 0 12px;
-        }
-
-        /* Header Navbar */
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 0;
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
-        }
-
-        .badge-18 {
-            background-color: var(--primary-red);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .brand-text {
-            color: #ffffff;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-icon-setting {
-            background-color: #1e2638;
-            color: #9aa4bf;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .btn-vip-access {
-            background: linear-gradient(135deg, #ff0015 0%, #99000d 100%);
-            color: #ffffff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
-            cursor: pointer;
-        }
-
-        /* Teks Status Live Stream */
-        .stream-status-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .live-tag {
-            color: var(--primary-red);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .live-indicator {
-            width: 8px;
-            height: 8px;
-            background-color: var(--primary-red);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .stream-title {
-            color: #d1d5db;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Frame Pemutar Video Utama */
-        .video-card-frame {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000000;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Overlay Play Button Awal */
-        .video-play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .play-button-big {
-            width: 64px;
-            height: 64px;
-            background-color: var(--primary-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 24px;
-            padding-left: 4px;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
-            transition: transform 0.2s ease;
-        }
-
-        .video-play-overlay:hover .play-button-big {
-            transform: scale(1.1);
-        }
-
-        /* Modal Konfirmasi Usia DI DALAM FRAME VIDEO */
-        .frame-age-modal {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 14, 20, 0.92);
-            backdrop-filter: blur(4px);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            text-align: center;
-            z-index: 20;
-        }
-
-        .frame-modal-icon {
-            font-size: 28px;
-            color: var(--primary-red);
-            margin-bottom: 6px;
-        }
-
-        .frame-modal-title {
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 4px;
-            color: #ffffff;
-        }
-
-        .frame-modal-text {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.3;
-            margin-bottom: 14px;
-            max-width: 90%;
-        }
-
-        .frame-modal-actions {
-            display: flex;
-            gap: 8px;
-            width: 100%;
-            max-width: 240px;
-        }
-
-        .btn-frame {
-            flex: 1;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 12px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-frame-confirm {
-            background-color: var(--primary-red);
-            color: #ffffff;
-        }
-
-        .btn-frame-cancel {
-            background-color: #1e2638;
-            color: var(--text-muted);
-        }
-
-        /* Seksi Deskripsi Video */
-        .video-info-section {
-            margin-top: 18px;
-            margin-bottom: 16px;
-        }
-
-        .info-title {
-            font-size: 18px;
-            font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-title i {
-            color: #ff5500;
-        }
-
-        /* Tampilan Info Metadata (Durasi, Ukuran, Tanggal) */
-        .video-meta-bar {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .meta-item i {
-            font-size: 14px;
-        }
-
-        /* Tombol Download Utama (Menarik & Interaktif) */
-        .btn-download-wrapper {
-            width: 100%;
-            margin-top: 4px;
-        }
-
-        .btn-download-large {
-            position: relative;
-            width: 100%;
-            background: linear-gradient(135deg, #e50914 0%, #b3000a 50%, #800007 100%);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 14px 20px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.5);
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-
-        /* Efek Kilau / Shimmer Animated Glow */
-        .btn-download-large::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 50%;
-            height: 200%;
-            background: linear-gradient(
-                60deg,
-                rgba(255, 255, 255, 0) 20%,
-                rgba(255, 255, 255, 0.35) 50%,
-                rgba(255, 255, 255, 0) 80%
-            );
-            transform: rotate(25deg);
-            animation: shimmer 2.5s infinite;
-        }
-
-        @keyframes shimmer {
-            100% {
-                left: 140%;
-            }
-        }
-
-        .btn-download-large:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(229, 9, 20, 0.7);
-        }
-
-        .btn-download-large:active {
-            transform: translateY(1px) scale(0.99);
-        }
-
-        /* Ikon Download Animasi Bounce */
-        .download-icon-box {
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            backdrop-filter: blur(4px);
-        }
-
-        .download-icon-box i {
-            animation: bounceDown 1.8s infinite ease-in-out;
-        }
-
-        @keyframes bounceDown {
-            0%, 100% { transform: translateY(-2px); }
-            50% { transform: translateY(3px); }
-        }
-
-        .download-text-content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-            line-height: 1.15;
-        }
-
-        .download-main-text {
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-        }
-
-        .download-sub-text {
-            font-size: 11px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 2px;
-        }
-    </style>
-    <script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="monetag" content="0f1c123699afba36917360674301ca96">
+  <script>(function(s){s.dataset.zone='11630945',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <title>StreamVerse - Smart Redirection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col font-sans">
 
-    <!-- Container Utama App -->
-    <div class="app-container">
+  <!-- Header -->
+  <header class="flex justify-between items-center px-6 py-4 bg-slate-900/80 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
+    <div class="flex items-center gap-2 text-indigo-500 font-bold text-xl">
+      <i class="fa-solid fa-play-circle text-2xl text-indigo-400"></i> StreamVerse
+    </div>
+    <button class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+      Masuk
+    </button>
+  </header>
 
-        <!-- 1. Header Navbar -->
-        <header class="navbar">
-            <div class="brand-logo">
-                <span class="badge-18">18+</span>
-                <span class="brand-text">VIDHUB</span>
-            </div>
-            <div class="header-actions">
-                <button class="btn-icon-setting" aria-label="Settings" onclick="openDirectLink()">
-                    <i class="fa-solid fa-gear"></i>
-                </button>
-                <button class="btn-vip-access" onclick="openDirectLink()">
-                    <i class="fa-solid fa-bolt"></i>
-                    <span>VIP Access</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- 2. Teks Status Streaming -->
-        <div class="stream-status-bar">
-            <span class="live-tag">
-                <span class="live-indicator"></span> LIVE STREAM
-            </span>
-            <span style="color: var(--card-border);">|</span>
-            <span class="stream-title">🔥 Video Streaming Premium (Full Uncut HD)</span>
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Video Utama -->
+    <div class="lg:col-span-2 space-y-4">
+      
+      <!-- Kartu Video Utama (Menerapkan Smart Link) -->
+      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://videy.co/v/?id=mtWW5b321')" 
+           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
+        
+        <img src="https://i.ibb.co/fzmHBZ9s/70601e66101227c053c2ce2364b3be3f.jpg" alt="Video Poster" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+        
+        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
+          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
+            <i class="fa-solid fa-play"></i>
+          </div>
+          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
+            Klik untuk Putar Video
+          </span>
         </div>
 
-        <!-- 3. Frame Pemutar Video Utama -->
-        <div class="video-card-frame">
-            <video id="myVideo" poster="https://i.ibb.co.com/pvW16S0M/image.webp" playsinline preload="metadata">
-                <!-- LINK DIRECT FILE VIDEO MP4 CATBOX -->
-                <source src="https://files.catbox.moe/qy3h7u.mp4" type="video/mp4">
-            </video>
+      </div>
 
-            <!-- Overlay Play Button Awal -->
-            <div class="video-play-overlay" id="playOverlay" onclick="handlePlayClick()">
-                <div class="play-button-big">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-            </div>
-
-            <!-- Modal Konfirmasi Usia DI DALAM FRAME -->
-            <div class="frame-age-modal" id="frameAgeModal">
-                <div class="frame-modal-icon">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <h2 class="frame-modal-title">Konfirmasi Usia</h2>
-                <p class="frame-modal-text">Konten ini khusus untuk usia 18+. Verifikasi usia Anda untuk melanjutkan.</p>
-                <div class="frame-modal-actions">
-                    <button class="btn-frame btn-frame-cancel" onclick="cancelAgeCheck(event)">Batal</button>
-                    <button class="btn-frame btn-frame-confirm" onclick="confirmAgeAndPlay(event)">Saya 18+</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Seksi Deskripsi & Metadata Video -->
-        <section class="video-info-section">
-            <h1 class="info-title">
-                <i class="fa-solid fa-fire"></i>
-                <span>Tante Jadi Pengen Karena Lihat Punyaku (Full HD)</span>
-            </h1>
-            
-            <!-- Tampilan Info Sesuai Gambar -->
-            <div class="video-meta-bar">
-                <div class="meta-item">
-                    <i class="fa-regular fa-clock"></i>
-                    <span>27:48</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fa-solid fa-sd-card"></i>
-                    <span>118 MB</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fa-regular fa-calendar"></i>
-                    <span>September 24, 2026</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Tombol DOWNLOAD NOW Utama (Model Menarik & Animatif) -->
-        <div class="btn-download-wrapper">
-            <button class="btn-download-large" onclick="handlePlayClick()">
-                <div class="download-icon-box">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-                <div class="download-text-content">
-                    <span class="download-main-text">DOWNLOAD NOW</span>
-                    <span class="download-sub-text">⚡ Kecepatan Tinggi • Full HD 1080p</span>
-                </div>
-            </button>
-        </div>
-
+      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+        <h1 class="text-xl font-bold text-white">Pelukan yang terasa sedikit berbeda</h1>
+        <p class="text-slate-400 text-sm mt-1">Klik gambar di atas untuk memutar video</p>
+      </div>
     </div>
 
-    <!-- Script Kontrol Interaktif & Direct Link -->
-    <script>
-        const DIRECT_LINK = "https://emotionallytonightintelligent.com/bwuq2bmay8?key=64b01feeb25c6433602effa9db70338d";
+    <!-- Rekomendasi Video -->
+    <div class="bg-slate-900/40 p-4 rounded-2xl border border-slate-800 h-fit space-y-4">
+      <h2 class="font-semibold text-slate-200 border-b border-slate-800 pb-2">Rekomendasi Video</h2>
+      
+      <div class="space-y-3">
 
-        const video = document.getElementById('myVideo');
-        const playOverlay = document.getElementById('playOverlay');
-        const frameAgeModal = document.getElementById('frameAgeModal');
-        let isAgeVerified = false;
+        <!-- Rekomendasi 1 -->
+        <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://videy.co/v/?id=kLWyWPrG1')" 
+             class="flex gap-3 p-2 rounded-lg hover:bg-slate-800/60 transition group cursor-pointer">
+          <div class="relative overflow-hidden rounded flex-shrink-0 w-28 h-16 bg-slate-800">
+            <img src="https://i.ibb.co/cfhCn3Z/d7223460616ca6029a970a5e7399010a.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+              <i class="fa-solid fa-play text-white text-xs"></i>
+            </div>
+          </div>
+          <div class="flex flex-col justify-center">
+            <p class="text-sm font-medium line-clamp-1 group-hover:text-indigo-400 transition">Video Rekomendasi 1</p>
+            <span class="text-xs text-indigo-400 mt-1 flex items-center gap-1">
+              Terlalu dekat untuk dianggap biasa saja <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </span>
+          </div>
+        </div>
 
-        function handlePlayClick() {
-            if (!isAgeVerified) {
-                frameAgeModal.style.display = 'flex';
-                playOverlay.style.display = 'none';
-            } else {
-                startVideoAndRedirect();
-            }
-        }
+        <!-- Rekomendasi 2 -->
+        <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://videy.co/v/?id=BokZoXmy1')" 
+             class="flex gap-3 p-2 rounded-lg hover:bg-slate-800/60 transition group cursor-pointer">
+          <div class="relative overflow-hidden rounded flex-shrink-0 w-28 h-16 bg-slate-800">
+            <img src="https://i.ibb.co/nN0VKvPv/9a1781912dce1a09f6c01145e060a1ad-1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+              <i class="fa-solid fa-play text-white text-xs"></i>
+            </div>
+          </div>
+          <div class="flex flex-col justify-center">
+            <p class="text-sm font-medium line-clamp-1 group-hover:text-indigo-400 transition">Video Rekomendasi 2</p>
+            <span class="text-xs text-indigo-400 mt-1 flex items-center gap-1">
+              Dia tahu bagaimana menarik perhatianmu <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </span>
+          </div>
+        </div>
 
-        function cancelAgeCheck(e) {
-            if (e) e.stopPropagation();
-            frameAgeModal.style.display = 'none';
-            playOverlay.style.display = 'flex';
-        }
+      </div>
+    </div>
 
-        function confirmAgeAndPlay(e) {
-            isAgeVerified = true;
-            frameAgeModal.style.display = 'none';
-            playOverlay.style.display = 'none';
+  </main>
 
-            startVideoAndRedirect();
-        }
+  <!-- Logika JS untuk Redirect Bertahap -->
+  <script>
+    let isFirstClick = true;
 
-        function startVideoAndRedirect() {
-            video.controls = true;
-            video.load();
-            
-            const playPromise = video.play();
+    function handleSmartClick(directLink, videyLink) {
+      if (isFirstClick) {
+        // Klik Ke-1: Buka Direct Link di tab baru
+        window.open(directLink, '_blank');
+        isFirstClick = false; // Ubah status agar klik berikutnya lanjut ke Videy
+      } else {
+        // Klik Ke-2: Buka Link Videy di tab baru
+        window.open(videyLink, '_blank');
+      }
+    }
+  </script>
 
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    setTimeout(() => {
-                        openDirectLink();
-                    }, 300);
-                }).catch(error => {
-                    console.log("Autoplay dibatasi browser, membuka direct link:", error);
-                    openDirectLink();
-                });
-            } else {
-                openDirectLink();
-            }
-        }
-
-        function openDirectLink() {
-            window.open(DIRECT_LINK, '_blank');
-        }
-    </script>
 </body>
-</html>
+    </html>
