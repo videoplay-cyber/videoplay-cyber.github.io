@@ -1,148 +1,290 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta name="monetag" content="0f1c123699afba36917360674301ca96">
-  <script>(function(s){s.dataset.zone='11630945',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StreamVerse - Viral Video</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://emotionallytonightintelligent.com/2a/15/08/2a15084bf7ff93836ca192b167c929d0.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreamVerse - Video Collection</title>
+<meta name="description" content="Video Collection - Watch the latest videos on StreamVerse.">
+<meta name="theme-color" content="#F5F0E6">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F5F0E6;color:#30251D;font-family:Arial,sans-serif}
+
+/* HEADER */
+header{padding:8px 5%;background:#FFFDF8;border-bottom:1px solid #E3D8C9}
+.logo{display:flex;align-items:center;justify-content:center;width:100%}
+.logo-text{display:block;font-family:'Orbitron',sans-serif;font-size:clamp(18px,5vw,30px);font-weight:900;letter-spacing:1px;color:#D96B0B;text-align:center}
+
+/* KONTEN */
+.container{max-width:1200px;margin:auto;padding:25px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.top h2{font-size:23px;color:#D96B0B;margin:0}
+.tabs{display:flex;background:#E8DFD2;border-radius:40px;padding:5px;gap:3px}
+.tabs button{border:0;background:transparent;color:#30251D;padding:12px 17px;border-radius:30px;font-weight:bold;cursor:pointer}
+.tabs button.active{background:#FF8C24;color:#FFFFFF}
+
+/* PENCARIAN */
+.search{width:100%;max-width:350px;padding:13px;background:#FFFDF8;border:1px solid #D8CBB9;border-radius:9px;color:#30251D;outline:none;margin-bottom:22px;caret-color:#FF8C24}
+.search::placeholder{color:#9A8B7B;opacity:1}
+.search:focus{border-color:#FF8C24}
+
+/* VIDEO PLAYER */
+.player-section{display:none;margin-bottom:30px}
+.player-section.show{display:block}
+.player{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.player iframe{width:100%;height:100%;border:0;display:block;background:#000}
+.player-info{padding:12px 2px}
+.player-info h2{font-size:20px}
+.player-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.close-player{background:#FF8C24;border:0;padding:10px 18px;border-radius:7px;color:#FFFFFF;font-weight:bold;cursor:pointer}
+.direct-link{display:inline-block;background:#38291D;color:#FFB36B;padding:10px 15px;border-radius:7px;text-decoration:none;font-size:13px;font-weight:bold}
+
+/* GRID VIDEO */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{background:#FFFDF8;border:1px solid #59402C;border-radius:17px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:#FF8C24}
+.thumb{position:relative;width:100%;aspect-ratio:16/9;background:#E8DFD2;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:#FF8C24;display:flex;align-items:center;justify-content:center;color:white;font-size:21px;padding-left:3px}
+.details{padding:13px}
+.details h3{font-size:17px;line-height:1.35;margin:0 0 15px;min-height:45px;color:#D96B0B}
+.meta{display:flex;justify-content:space-between;align-items:center;color:#75685B;font-size:13px;gap:5px}
+.duration{background:#30251D;padding:8px 10px;border-radius:8px;color:white}
+
+/* PAGINATION */
+.pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin:30px 0;flex-wrap:wrap}
+.pagination button{min-width:42px;height:42px;border:1px solid #59402C;border-radius:9px;background:#FFFDF8;color:#30251D;font-size:15px;font-weight:bold;cursor:pointer}
+.pagination button.active{background:#FF8C24;color:#FFFFFF;border-color:#FF8C24}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.empty{grid-column:1/-1;text-align:center;padding:30px;color:#75685B}
+
+/* FOOTER */
+footer{margin-top:40px;text-align:center;background:#FFFDF8;padding:25px;color:#75685B;font-size:13px}
+
+/* TAMPILAN MOBILE */
+@media(max-width:650px){
+header{padding:1px 18px}
+.logo img{height:50px;max-width:500px}
+.container{padding:17px}
+.top{align-items:flex-start;flex-direction:column;gap:12px}
+.top h2{font-size:21px}
+.tabs{width:100%;justify-content:space-between}
+.tabs button{padding:11px 15px;font-size:13px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.details{padding:11px}
+.details h3{font-size:15px;min-height:42px}
+.meta{font-size:11px}
+.duration{padding:7px}
+}
+</style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen flex flex-col font-sans items-center">
 
-  <!-- Header / Navbar -->
-  <header class="w-full flex justify-between items-center px-6 py-4 bg-slate-900/85 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
-    <div class="flex items-center gap-2 text-indigo-500 font-bold text-xl">
-      <i class="fa-solid fa-play-circle text-2xl text-indigo-400"></i> StreamVerse
-    </div>
-    <button class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
-      Masuk
-    </button>
-  </header>
+<body>
 
-  <!-- Main Content (Container 5 Video Full Frame) -->
-  <main class="w-full max-w-3xl p-4 md:p-6 space-y-8">
-    
-    <!-- VIDEO 1 -->
-    <div class="space-y-3">
-      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://trbnvideo.live/v/PMa41iLr')" 
-           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
-        <img src="https://i.ibb.co.com/S43L3S6q/Screenshot-2026-09-20-22-54-46-341-com-twitter-android-edit.jpg" alt="Video 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
-          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
-            <i class="fa-solid fa-play"></i>
-          </div>
-          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
-            Klik untuk Putar Video
-          </span>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-        <h1 class="text-lg font-bold text-white">Mommy Itha Ngeprank Ojol Sampai Crot</h1>
-      </div>
-    </div>
+<header>
+<div class="logo"><span class="logo-text">🔥STREAMVERSE🔥</span></div>
+</header>
 
-    <!-- VIDEO 2 -->
-    <div class="space-y-3">
-      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://trbnvideo.live/v/0f1D6USB')" 
-           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
-        <img src="https://i.ibb.co.com/Xx6mVYww/IMG-20261013-160323.jpg" alt="Video 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
-          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
-            <i class="fa-solid fa-play"></i>
-          </div>
-          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
-            Klik untuk Putar Video
-          </span>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-        <h1 class="text-lg font-bold text-white">Main Sama Temen Kerja</h1>
-      </div>
-    </div>
+<main class="container">
+<div class="top">
+<h2>Video Collection</h2>
+<div class="tabs">
+<button class="active" data-sort="new">New</button>
+<button data-sort="trending">Trending</button>
+<button data-sort="oldest">Oldest</button>
+</div>
+</div>
 
-    <!-- VIDEO 3 -->
-    <div class="space-y-3">
-      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://trbnvideo.live/v/QhFMCodt')" 
-           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
-        <img src="https://i.ibb.co.com/W4kNRcTP/image.webp" alt="Video 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
-          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
-            <i class="fa-solid fa-play"></i>
-          </div>
-          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
-            Klik untuk Putar Video
-          </span>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-        <h1 class="text-lg font-bold text-white">Body Mantap</h1>
-      </div>
-    </div>
+<input class="search" id="search" type="search" placeholder="Search videos..." autocomplete="off">
 
-    <!-- VIDEO 4 -->
-    <div class="space-y-3">
-      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://trbnvideo.live/v/O7PU9w8K')" 
-           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
-        <img src="https://i.ibb.co.com/LzpYQP6q/19a7a2598b5803b2a56de94c5d065fa7.jpg" alt="Video 4" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
-          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
-            <i class="fa-solid fa-play"></i>
-          </div>
-          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
-            Klik untuk Putar Video
-          </span>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-        <h1 class="text-lg font-bold text-white">Istri Chindo Fetish Pakai Kain Jarik</h1>
-      </div>
-    </div>
+<section class="player-section" id="playerSection">
+<div class="player">
+<iframe id="videoFrame" src="about:blank" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="eager" title="StreamVerse Video Player"></iframe>
+</div>
+<div class="player-info">
+<h2 id="playingTitle">Video Title</h2>
+<div class="player-actions">
+<button class="close-player" id="closePlayer">Close Video</button>
+<a class="direct-link" id="directLink" href="#" target="_blank" rel="noopener noreferrer">Open Full Size</a>
+</div>
+</div>
+</section>
 
-    <!-- VIDEO 5 -->
-    <div class="space-y-3">
-      <div onclick="handleSmartClick('https://uplcm.com/4/11871605', 'https://trbnvideo.live/v/Pz88uxq9')" 
-           class="block relative bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 aspect-video group cursor-pointer">
-        <img src="https://i.ibb.co.com/9jpp2XK/35e98d7668313baa85735e6b9ece9115.jpg" alt="Video 5" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/20 transition gap-3">
-          <div class="w-16 h-16 bg-indigo-600/90 rounded-full flex items-center justify-center pl-1 text-white text-2xl shadow-lg group-hover:scale-110 transition duration-300">
-            <i class="fa-solid fa-play"></i>
-          </div>
-          <span class="bg-slate-900/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-200 border border-slate-700">
-            Klik untuk Putar Video
-          </span>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-        <h1 class="text-lg font-bold text-white">Malam Minggu Main di Hotel Bareng Pacar</h1>
-      </div>
-    </div>
+<div class="grid" id="videoGrid"></div>
+<div class="pagination" id="pagination"></div>
+</main>
 
-    <!-- PAGINATION -->
-    <div class="flex justify-center items-center gap-2 pt-6 border-t border-slate-800">
-      <a href="https://uplcm.com/4/11871605" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg text-sm shadow hover:bg-indigo-500 transition">1</a>
-      <a href="https://uplcm.com/4/11871605" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-slate-900 text-slate-300 border border-slate-800 rounded-lg text-sm hover:bg-slate-800 hover:text-white transition">2</a>
-      <a href="https://uplcm.com/4/11871605" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-slate-900 text-slate-300 border border-slate-800 rounded-lg text-sm hover:bg-slate-800 hover:text-white transition">3</a>
-      <span class="px-2 text-slate-500">...</span>
-      <a href="https://uplcm.com/4/11871605" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-slate-900 text-slate-300 border border-slate-800 rounded-lg text-sm hover:bg-slate-800 hover:text-white transition">Next &raquo;</a>
-    </div>
+<footer>© 2026 StreamVerse. All Rights Reserved.</footer>
 
-  </main>
+<!-- Pasang skrip popunder dari jaringan iklan Anda di bawah ini jika diperlukan -->
 
-  <!-- Script Logika Smart Redirection -->
-  <script>
-    let isFirstClick = true;
+<script>
+(function(){
 
-    function handleSmartClick(directLink, videyLink) {
-      if (isFirstClick) {
-        window.open(directLink, '_blank');
-        isFirstClick = false;
-      } else {
-        window.open(videyLink, '_blank');
-      }
-    }
-  </script>
+/* 1. CONFIGURATION */
+const BASE_URL="https://vidara.to/e/";
+const SMARTLINK_URL="https://uplcm.com/4/11871605";
+const PER_PAGE=9;
 
+/* 2. VIDEO DATABASE */
+const videos=[
+{title:"Msbreewc Nekat Main di Kedai Chinese Food",id:"aeDu6uAsPGlGn",date:20,image:"https://i.ibb.co.com/xqyJYYJ3/IMG-20261126-142431.jpg"},
+{title:"Kirim Pap Buat Ayang",id:"m4jKH7hKGTzyO",date:19,image:"https://i.ibb.co.com/BKzD4r4W/IMG-20261126-142234.jpg"},
+{title:"Ibu Tiri yang Baik Hati",id:"fmJTM5kZ45rHh",date:18,image:"https://i.ibb.co.com/nqv0Y3xb/IMG-20261126-142144.jpg"},
+{title:"BTS Indo Kelas Bintang",id:"GhPVkMoSTK4rB",date:17,image:"https://i.ibb.co.com/sXL9v1B/Screenshot-2026-11-26-13-28-59-575-com-twitter-android-edit.jpg"},
+{title:"Kata Temenku Istriku Jauh Lebih Nikmat",id:"uFVMPfiollFpT",date:16,image:"https://i.ibb.co.com/j93z8KFt/Screenshot-2026-11-26-13-28-38-429-com-twitter-android.jpg"},
+{title:"SMA Viral Pamer M3m3k",id:"lq1eEQhLGVYWE",date:15,image:"https://i.ibb.co.com/5gJY0MDP/Screenshot-2026-11-26-13-26-47-443-com-twitter-android-edit.jpg"},
+{title:"Diajak Atasan ke Hotel",id:"3S6DLCJwmEEL7",date:14,image:"https://i.ibb.co.com/TDFdjN8z/Screenshot-2026-11-26-13-12-45-009-com-twitter-android-edit.jpg"},
+{title:"Trio Lesbi Siskaeee,  Dhea,  Msbreewc",id:"WK2dbCxXOVuz9",date:13,image:"https://i.ibb.co.com/9my5XkHp/Screenshot-2026-11-26-13-05-51-374-com-twitter-android-edit.jpg"},
+{title:"Tante Sarah Ardhelia Goyang Bar - Bar",id:"KUMe2UJ2b3uG6",date:12,image:"https://i.ibb.co.com/pvZ0GTzq/Screenshot-2026-11-26-13-02-49-536-com-twitter-android-edit.jpg"},
+{title:"Selebgram yg Dulu Sempat Viral",id:"aT9mL0aHlfgoI",date:11,image:"https://i.ibb.co.com/nNxvNSy0/Screenshot-2026-11-26-12-52-04-357-com-twitter-android.jpg"},
+{title:"Ngewe Istri Teman yg Kesepian",id:"MpsO6feY3ZeSk",date:10,image:"https://i.ibb.co.com/j9N0Zrq9/Screenshot-2026-11-26-12-48-17-691-com-twitter-android.jpg"},
+{title:"Beruntung Banget Driver Ojol Satu Ini",id:"fFGXKiC1C6tkz",date:9,image:"https://i.ibb.co.com/845wjd1G/Screenshot-2026-11-26-12-12-21-266-com-twitter-android.jpg"},
+{title:"Kecanduan Sama Otong Kang Ojol Ijo",id:"xj5XjRHFvycTu",date:8,image:"https://i.ibb.co.com/hxNtFY2y/Screenshot-2026-11-26-12-08-59-100-com-twitter-android-edit.jpg"},
+{title:"Tante Kimaya dan Brondongnya",id:"gMPIhVfr5IWFG",date:7,image:"https://i.ibb.co.com/SwBpwKSN/HUXJAplbk-AABqfv.jpg"},
+{title:"Gebrakan Baru Trio Lesbi Siskaeee,  Dhea,  dan Meli3gp",id:"78qHN74TORpk0",date:6,image:"https://i.ibb.co.com/b5bY2XsZ/Screenshot-2026-11-26-09-57-00-364-com-twitter-android-edit.jpg"},
+{title:"Katanya cari sensasi. Ngent*t Sama Pacar di Ruang Tamu",id:"bgKwR4x6PpaAb",date:5,image:"https://i.ibb.co.com/mCjCg88R/HW8g4b3b-AAAEIGo.jpg"},
+{title:"Live Bareng Tante Shasa",id:"C68FslTDFK23H",date:4,image:"https://i.ibb.co.com/d0zFYnXV/HXa-SACQa-QAA97pt.jpg"},
+{title:"Abang Kurir Sampe Melongo Lihat Ada yang Melorot",id:"o5Pk1dMmKMVkT",date:3,image:"https://i.ibb.co.com/7xS2wc9H/Screenshot-2026-11-26-08-53-11-037-com-twitter-android-edit.jpg"},
+{title:"Duet Maut Msbreewc dan Dhea Ayu",id:"gflUAa8l8B41Z",date:2,image:"https://i.ibb.co.com/knsXB4j/Screenshot-2026-11-25-16-47-51-887-com-twitter-android-edit.jpg"},
+{title:"Ceweknya Lincah Banget. Cowoknya Sampe Merem Melek",id:"BLkmTuMZqdKbB",date:1,image:"https://i.ibb.co.com/CpsBnpC9/Screenshot-2026-11-25-17-23-51-875-com-twitter-android-edit.jpg"}
+];
+
+/* 3. ELEMENT DAN STATUS */
+let currentPage=1,currentSort="new";
+const grid=document.getElementById("videoGrid");
+const pagination=document.getElementById("pagination");
+const search=document.getElementById("search");
+const playerSection=document.getElementById("playerSection");
+const videoFrame=document.getElementById("videoFrame");
+const playingTitle=document.getElementById("playingTitle");
+const directLink=document.getElementById("directLink");
+
+/* 4. MENGAMBIL DAN MENGURUTKAN VIDEO */
+function getVideos(){
+const query=search.value.toLowerCase().trim();
+let data=videos.filter(video=>video.title.toLowerCase().includes(query)||video.id.toLowerCase().includes(query));
+if(currentSort==="new")data.sort((a,b)=>b.date-a.date);
+if(currentSort==="oldest")data.sort((a,b)=>a.date-b.date);
+if(currentSort==="trending"){
+data.sort((a,b)=>{
+const aClicks=Number(localStorage.getItem("StreamVerse_"+a.id)||0);
+const bClicks=Number(localStorage.getItem("StreamVerse_"+b.id)||0);
+return bClicks-aClicks;
+});
+}
+return data;
+}
+
+/* 5. MEMBUKA VIDEO */
+function openVideo(video){
+const url=BASE_URL+video.id;
+window.open(SMARTLINK_URL,"_blank");
+playingTitle.textContent=video.title;
+videoFrame.src=url;
+directLink.href=url;
+playerSection.classList.add("show");
+
+const key="StreamVerse_"+video.id;
+const clicks=Number(localStorage.getItem(key)||0);
+localStorage.setItem(key,clicks+1);
+
+playerSection.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* 6. MENUTUP VIDEO */
+function closeVideo(){
+videoFrame.src="about:blank";
+playerSection.classList.remove("show");
+}
+
+document.getElementById("closePlayer").addEventListener("click",closeVideo);
+
+/* 7. MENAMPILKAN DAFTAR VIDEO */
+function renderVideos(){
+const data=getVideos();
+const totalPages=Math.max(1,Math.ceil(data.length/PER_PAGE));
+currentPage=Math.min(currentPage,totalPages);
+const start=(currentPage-1)*PER_PAGE;
+const pageVideos=data.slice(start,start+PER_PAGE);
+grid.innerHTML="";
+
+if(pageVideos.length===0)grid.innerHTML='<div class="empty">Video tidak ditemukan.</div>';
+
+pageVideos.forEach(video=>{
+const card=document.createElement("div");
+card.className="card";
+card.innerHTML=`
+<div class="thumb">
+<img src="${video.image}" alt="${video.title}" loading="lazy">
+<div class="play-icon">▶</div>
+</div>
+<div class="details">
+<h3></h3>
+<div class="meta">
+<span>StreamVerse</span>
+<span class="duration"></span>
+</div>
+</div>
+`;
+card.querySelector("h3").textContent=video.title;
+card.addEventListener("click",()=>openVideo(video));
+grid.appendChild(card);
+});
+
+renderPagination(totalPages);
+}
+
+/* 8. PAGINATION */
+function renderPagination(totalPages){
+pagination.innerHTML="";
+if(totalPages<=1)return;
+
+const prev=document.createElement("button");
+prev.textContent="‹";
+prev.disabled=currentPage===1;
+prev.onclick=()=>{currentPage--;renderVideos()};
+pagination.appendChild(prev);
+
+for(let i=1;i<=totalPages;i++){
+const button=document.createElement("button");
+button.textContent=i;
+if(i===currentPage)button.className="active";
+button.onclick=()=>{currentPage=i;renderVideos()};
+pagination.appendChild(button);
+}
+
+const next=document.createElement("button");
+next.textContent="›";
+next.disabled=currentPage===totalPages;
+next.onclick=()=>{currentPage++;renderVideos()};
+pagination.appendChild(next);
+}
+
+/* 9. TAB NEW, TRENDING, OLDEST */
+document.querySelectorAll(".tabs button").forEach(button=>{
+button.addEventListener("click",function(){
+currentSort=this.dataset.sort;
+currentPage=1;
+document.querySelectorAll(".tabs button").forEach(tab=>tab.classList.remove("active"));
+this.classList.add("active");
+renderVideos();
+});
+});
+
+/* 10. PENCARIAN VIDEO */
+search.addEventListener("input",()=>{
+currentPage=1;
+renderVideos();
+});
+
+/* 11. JALANKAN HALAMAN */
+renderVideos();
+
+})();
+</script>
 </body>
 </html>
